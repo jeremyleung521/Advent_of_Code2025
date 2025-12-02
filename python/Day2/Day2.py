@@ -29,7 +29,7 @@ def check_invalid(input_list):
 
 
 def check_invalid2(input_list):
-    bad_list = [[] for _ in range(len(input_list))]
+    count = 0
     for idx, (x, y) in enumerate(tqdm(input_list, total=len(input_list))):
         for val in trange(int(x), int(y)+1, leave=False):
             val = str(val)
@@ -37,28 +37,12 @@ def check_invalid2(input_list):
             for i in range(2, full_length+1):
                 if full_length % i == 0:
                     tot_length = int(full_length/i)
-                    split_list = set(batched(val, i))
-                    if len(split_list) == 1:
-                        bad_list[idx].append(int(val))
+                    ideal = val[:tot_length] * i
+                    if ideal == val:
+                        count += int(val)
                         break
 
-    n_total = sum([sum(i) for i in bad_list])
-    return bad_list, n_total 
-
-
-def return_max(input_list):
-    max_cal = np.max(input_list)
-    where = np.where(input_list == max_cal)[0][0]
-
-    return [int(max_cal), where]
-
-
-def return_top3(input_list):
-    sorted_list = sorted(input_list, key=lambda x: -x)
-    cal_sum = sum(sorted_list[0:3])
-    where_three = np.where(input_list > sorted_list[3])[0]
-
-    return [int(cal_sum), where_three]
+    return count 
 
 
 def main():
@@ -74,7 +58,7 @@ def main2():
     # Part 2
     #b = read_input("Day2_test_input.txt")
     b = read_input("Day2_input.txt")
-    answer2, total2 = check_invalid2(b)
+    total2 = check_invalid2(b)
     print(total2)
     #print(f'Elves {answer2[1] + 1} have {answer2[0]} calories worth of food.')
 
