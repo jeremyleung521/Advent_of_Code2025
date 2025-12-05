@@ -95,6 +95,7 @@ def main2():
     #fresh, _ = read_input("Day5_test_input.txt")
     #fresh, _ = read_input("Day5_test_input2.txt")
     fresh, _ = read_input("Day5_input.txt")
+
     prev = []
     while True:
         if prev != fresh:
@@ -108,9 +109,9 @@ def main2():
 
 if __name__ == "__main__":
     ## Part 1
-    # startTime = time.perf_counter()
-    # main()
-    # print(f'{time.perf_counter() - startTime} sec.')
+    startTime = time.perf_counter()
+    main()
+    print(f'{time.perf_counter() - startTime} sec.')
 
     ## Part 2
     startTime = time.perf_counter()
