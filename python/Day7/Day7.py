@@ -1,7 +1,6 @@
 # Day7.py
 #
 # First attempt at doing Day 7 of Advent of Code 2025
-import re
 import time
 import numpy as np
 
@@ -51,21 +50,6 @@ def run_tachyon(input_list):
          print(final_output[-1])
 
      return final_output, counter
-
-
-def return_max(input_list):
-    max_cal = np.max(input_list)
-    where = np.where(input_list == max_cal)[0][0]
-
-    return [int(max_cal), where]
-
-
-def return_top3(input_list):
-    sorted_list = sorted(input_list, key=lambda x: -x)
-    cal_sum = sum(sorted_list[0:3])
-    where_three = np.where(input_list > sorted_list[3])[0]
-
-    return [int(cal_sum), where_three]
 
 
 def main():

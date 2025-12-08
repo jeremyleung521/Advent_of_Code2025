@@ -147,22 +147,6 @@ def loop2(input_list, pairwise_distances, n_iters):
     return circuits, answer
 
 
-
-def return_max(input_list):
-    max_cal = np.max(input_list)
-    where = np.where(input_list == max_cal)[0][0]
-
-    return [int(max_cal), where]
-
-
-def return_top3(input_list):
-    sorted_list = sorted(input_list, key=lambda x: -x)
-    cal_sum = sum(sorted_list[0:3])
-    where_three = np.where(input_list > sorted_list[3])[0]
-
-    return [int(cal_sum), where_three]
-
-
 def main():
     ## Part 1
     # a = read_input("Day8_test_input.txt")
