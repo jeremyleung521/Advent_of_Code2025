@@ -45,27 +45,67 @@ def run_tachyon(input_list):
          prev_check_list = current_check_list
 
      final_output = []
-     for line in input_list:
-         final_output.append(combine_list_str(line))
-         print(final_output[-1])
+     #with open('part1_output.txt', 'w') as file:
+     #    for line in input_list:
+     #        final_output.append(combine_list_str(line))
+     #        print(final_output[-1], file=file)
 
-     return final_output, counter
+     return counter
+
+
+def run_tachyon2(input_list):
+    prev_check_list = {int(idx) for idx, val in enumerate(input_list[0]) if val == 'S'}
+    n_width = len(input_list[0])
+    prev_path_list = [int(0)] * len(input_list[0])
+    for idx, line in enumerate(input_list):
+        current_check_list = set()
+        current_path_list = [int(0)] * n_width
+        for val in prev_check_list:
+            match line[val]:
+                case 'S':
+                    current_check_list.add(val)
+                    current_path_list[val] = 1
+                case '|':
+                    current_check_list.add(val)
+                    if prev_line[val] == '|':
+                        current_path_list[val] += prev_path_list[val]
+                case '^':
+                    line[val - 1] = '|'
+                    line[val + 1] = '|'
+                    current_check_list.add(val - 1)
+                    current_check_list.add(val + 1)
+
+                    current_path_list[val-1] += prev_path_list[val]
+                    current_path_list[val+1] += prev_path_list[val]
+                    current_path_list[val] = 0
+                case '.':
+                    if prev_line[val] == 'S' or prev_line[val] == '|':
+                        line[val] = '|'
+                        current_check_list.add(val)
+                        current_path_list[val] += prev_path_list[val]
+
+        #print(idx, current_path_list)
+        prev_check_list = current_check_list
+        prev_path_list = current_path_list
+        prev_line = line
+
+    return sum(current_path_list)
 
 
 def main():
     ## Part 1
     #a = read_input("Day7_test_input.txt")
     a = read_input("Day7_input.txt")
-    new_map, answer = run_tachyon(a)
+    answer = run_tachyon(a)
     print(f'{answer} splits occurred.')
 
 
 def main2():
     # Part 2
-    b = read_input("Day7_test_input.txt")
-    # b = read_input("Day7_input.txt")
-    answer2 = return_top3(b)
-    print(f'Elves {answer2[1] + 1} have {answer2[0]} calories worth of food.')
+    # b = read_input("Day7_test_input.txt")
+    b = read_input("Day7_input.txt")
+    answer2 = run_tachyon2(b)
+    print(f'{answer2} possible paths.')
 
 
 if __name__ == "__main__":
@@ -75,6 +115,6 @@ if __name__ == "__main__":
     print(f'{time.perf_counter() - startTime} sec.')
 
     ## Part 2
-    # startTime = time.perf_counter()
-    # main2()
-    # print(f'{time.perf_counter() - startTime} sec.')
+    startTime = time.perf_counter()
+    main2()
+    print(f'{time.perf_counter() - startTime} sec.')
