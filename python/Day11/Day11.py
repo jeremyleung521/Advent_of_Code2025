@@ -53,49 +53,6 @@ def run_dfs2(graph: dict, start):
     return dfs(start, False, False)
 
 
-def dfs(graph, node):
-    visited = []
-    stack = deque()
-
-    visited.append(node)
-    stack.append(node)
-
-    while stack:
-        s = stack.pop()
-        print(s, end = " ")
-
-        for n in reversed(graph[s]):
-            if n not in visited:
-                visited.append(n)
-                stack.append(n)
-
-
-def bfs_optimize(adj_array, start, end):
-    parent = {start: None}
-    d = {start: 0}
-    visited = []
-
-    queue = deque()
-    queue.append(start)
-    #print(end)
-    while queue:
-        u = queue.popleft()
-        if u not in visited:
-            visited.append(u)
-        for n in adj_array[u]:
-            # print(n)
-            # if u in end:
-            #     print(f'Shortest path between {start} and {end} is {d[u]} steps.')
-            #     return parent, d
-            if n not in d:
-                if n not in parent:
-                    parent[n] = []
-                parent[n].append(u)
-                d[n] = d[u] + 1
-                queue.append(n)
-    return parent, d
-
-
 def main():
     ## Part 1
     # a = read_input("Day11_test_input.txt")
